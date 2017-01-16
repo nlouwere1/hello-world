@@ -35,6 +35,16 @@ services:
     depends_on:
       - postgres
       - guacd
+
+  webserver:
+   image: httpd:2.4
+   volumes:
+    - $PWD/web/htdocs:/usr/local/apache2/htdocs
+    - $PWD/web/conf:/usr/local/apache2/conf
+    - $PWD/web/error:/usr/local/apache2/error
+    - $PWD/web/logs:/usr/local/apache2/logs
+   ports:
+    - "80:80"
     
 volumes:
   data:
@@ -42,4 +52,6 @@ volumes:
 
 networks:
   guac:
+    driver: bridge
+  webserver:
     driver: bridge
